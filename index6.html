@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+<body>
+    <div style="border: 1px solid black; background-color: gainsboro; width: fit-content; margin-inline: auto; padding-inline: 50px; padding-bottom: 50px; margin-top: 20px; border-radius: 20px;">
+        <h1 style="text-align: center; margin-top: 50px;">Form Produk</h1>
+
+        <form id="form-produk">
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                <label for="">Kode Produk</label>
+                <input type="text" id="kode-produk" readonly>
+            </div>
+
+            <div style="display: flex; justify-content: space-around; margin-bottom: 1.5rem;">
+                <label for="">Nama Produk</label>
+                <input type="text" style="margin-left: 10px;" id="nama-produk">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label for="">Harga</label>
+                <input type="number" id="harga-produk">
+            </div>
+
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                <label for="">Satuan</label>
+                <select style="margin-left: 41px;" id="satuan-produk">
+                    <option value="Gelas">Gelas</option>
+                    <option value="Piring">Piring</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label for="">Kategori</label>
+                <select style="margin-left: 29px;" id="kategori-produk">
+                    <option>Minuman Dingin</option>
+                    <option>Minuman Panas</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label>Url Gambar</label>
+                <input type="text" id="urlgambar-produk">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label>Stok</label>
+                <input type="text" id="stok-produk">
+            </div>
+
+            <button type="button" style="display: inline-block; background-color: gray; color: #000000; padding: 0.55rem 1.5rem; border-radius: 0.5rem; transform: 0.3s; justify-content: space-between;" id="tombol-submit" onclick="menyimpanProduk()">Submit</button>
+        </form>
+    </div>
+
+    <br><br><br>
+
+    <table border="1px solid black" style="border-collapse: collapse; margin-inline: auto;">
+        <thead>
+            <tr style="background-color: rgb(146, 143, 143);">
+                <th>Nomor</th>
+                <th>Kode Produk</th>
+                <th>Nama Produk</th>
+                <th>Harga Produk</th>
+                <th>Satuan Produk</th>
+                <th>Kategori Produk</th>
+                <th>Stok Produk</th>
+                <th>Gambar Produk</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody id="t-body">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="main.js"></script>
+</body>
+</html>
