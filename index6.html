@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="border: 1px solid black; background-color: gainsboro; width: fit-content; margin-inline: auto; padding-inline: 50px; padding-bottom: 50px; margin-top: 20px; border-radius: 20px;">
+        <h1 style="text-align: center; margin-top: 50px;">Form Produk</h1>
+
+        <form id="form-produk">
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                <label for="">Kode Produk</label>
+                <input type="text" id="kode-produk" readonly>
+            </div>
+
+            <div style="display: flex; justify-content: space-around; margin-bottom: 1.5rem;">
+                <label for="">Nama Produk</label>
+                <input type="text" style="margin-left: 10px;" id="nama-produk">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label for="">Harga</label>
+                <input type="number" id="harga-produk">
+            </div>
+
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between;">
+                <label for="">Satuan</label>
+                <select style="margin-left: 41px;" id="satuan-produk">
+                    <option value="Gelas">Gelas</option>
+                    <option value="Piring">Piring</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label for="">Kategori</label>
+                <select style="margin-left: 29px;" id="kategori-produk">
+                    <option>Minuman Dingin</option>
+                    <option>Minuman Panas</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label>Url Gambar</label>
+                <input type="text" id="urlgambar-produk">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <label>Stok</label>
+                <input type="text" id="stok-produk">
+            </div>
+
+            <button type="button" style="display: inline-block; background-color: gray; color: #000000; padding: 0.55rem 1.5rem; border-radius: 0.5rem; transform: 0.3s; justify-content: space-between;" id="tombol-submit" onclick="menyimpanProduk()">Submit</button>
+        </form>
+    </div>
+
+    <br><br><br>
+
+    <table border="1px solid black" style="border-collapse: collapse; margin-inline: auto;">
+        <thead>
+            <tr style="background-color: rgb(146, 143, 143);">
+                <th>Nomor</th>
+                <th>Kode Produk</th>
+                <th>Nama Produk</th>
+                <th>Harga Produk</th>
+                <th>Satuan Produk</th>
+                <th>Kategori Produk</th>
+                <th>Stok Produk</th>
+                <th>Gambar Produk</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody id="t-body">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var semuaProduk = []; // Array yang akan menyimpan data
+        var kodeIncrement = 1;  // kode produk mulai dari 01
+        var editIndex = -1; // 
+
+        function menyimpanProduk() { // function berfungsi untuk memanggil
+            var kodeProduk = document.getElementById('kode-produk').value; // documen berfungsi untuk mengambil elemen berdasarkan id nya
+            var namaProduk = document.getElementById('nama-produk').value;
+            var hargaProduk = document.getElementById('harga-produk').value;
+            var satuanProduk = document.getElementById('satuan-produk').value;
+            var kategoriProduk = document.getElementById('kategori-produk').value;
+            var urlgambarProduk = document.getElementById('urlgambar-produk').value;
+            var stokProduk = document.getElementById('stok-produk').value;
+
+            if (!namaProduk || !hargaProduk || !satuanProduk || !kategoriProduk || !urlgambarProduk || !stokProduk) { 
+                alert('Semua kolom harus diisi!');
+                return;
+            }
+
+            if (editIndex === -1) { // -1 digunakan untuk menandakan bahwa elemen atau item yang dicari tidak ditemukan
+                // Menambahkan produk baru ke array
+                var kodeProdukBaru = 'MD-' + String(kodeIncrement).padStart(2, '0');
+                semuaProduk.push({ // menambahkan elemen baru ke dalam array
+                    kodeProduk: kodeProdukBaru,
+                    namaProduk,
+                    hargaProduk,
+                    satuanProduk,
+                    kategoriProduk,
+                    urlgambarProduk,
+                    stokProduk
+                });
+                kodeIncrement++;  // Increment kode produk setelah menambahkan produk baru
+            } else {
+                // Mengupdate produk yang sudah ada
+                semuaProduk[editIndex] = {
+                    kodeProduk,  
+                    namaProduk,
+                    hargaProduk,
+                    satuanProduk,
+                    kategoriProduk,
+                    urlgambarProduk,
+                    stokProduk
+                };
+                editIndex = -1; // Reset editIndex setelah update produk
+            }
+
+            // Reset form dan tampilkan kode produk berikutnya
+            document.getElementById('kode-produk').value = 'MD-' + String(kodeIncrement).padStart(2, '0');
+            document.getElementById('form-produk').reset(); // Reset form
+            menampilkanTable();
+        }
+
+        function menampilkanTable() {
+            var tBody = document.getElementById("t-body");
+            tBody.innerHTML = '';
+
+            semuaProduk.forEach(function (produk, index) {
+                var tr = tBody.insertRow();
+                var backgroundColor = (produk.stokProduk < 5) ? 'red' : 'white';
+
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${produk.kodeProduk}</td>
+                    <td>${produk.namaProduk}</td>
+                    <td>${produk.hargaProduk}</td>
+                    <td>${produk.satuanProduk}</td>
+                    <td>${produk.kategoriProduk}</td>
+                    <td style="background-color: ${backgroundColor};">${produk.stokProduk}</td>
+                    <td><img src="${produk.urlgambarProduk}" alt="Product Image" width="50px" height="50px"></td>
+                    <td>
+                        <button onclick="editProduk(${index})">Edit</button> |
+                        <button onclick="hapusProduk(${index})">Delete</button>
+                    </td>
+                `;
+            });
+        }
+
+        function editProduk(index) {
+            var produk = semuaProduk[index];
+            document.getElementById('kode-produk').value = produk.kodeProduk;
+            document.getElementById('nama-produk').value = produk.namaProduk;
+            document.getElementById('harga-produk').value = produk.hargaProduk;
+            document.getElementById('satuan-produk').value = produk.satuanProduk;
+            document.getElementById('kategori-produk').value = produk.kategoriProduk;
+            document.getElementById('urlgambar-produk').value = produk.urlgambarProduk;
+            document.getElementById('stok-produk').value = produk.stokProduk;
+
+            editIndex = index; // Menyimpan indeks produk yang sedang diedit, ketika di submit tidak jadi halaman baru
+        }
+
+        function hapusProduk(index) {
+            semuaProduk.splice(index, 1); // Menghapus produk dari array
+            menampilkanTable();
+        }
+
+        // Menampilkan kode produk pertama kali
+        document.getElementById('kode-produk').value = 'MD-' + String(kodeIncrement).padStart(2, '0');
+    </script>
+</body>
+</html>
